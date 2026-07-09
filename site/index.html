@@ -3,73 +3,160 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Rehearse Lattice mesh exercise fate before live fly — entity stream gaps, relay loss, Investigate task failure.">
-  <title>Lattice Exercise Twin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <meta name="description" content="Rehearse Lattice formation exercises before hour 14 kills your mission.">
+  <title>Exercise Fails First</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#top"><span class="glyph">◈</span> Lattice Exercise Twin</a>
-    <nav>
-      <a href="#problem">Problem</a>
-      <a href="#sim">Simulation</a>
-      <a href="demo/blocked_exercise.html">Receipt</a>
-    </nav>
-    <a class="btn primary" href="https://github.com/Abhishek21g/lattice-exercise-twin">GitHub</a>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Lattice Mesh · Entities · Tasks API</p>
-        <h1 class="serif">Your sandbox passes.<br>The exercise still dies at hour 14.</h1>
-        <p class="lede">
-          Sample apps stream entities and create <strong>Investigate</strong> tasks on the happy path.
-          Formations lose relay nodes, entity streams gap, and task assignment fails — after green integration tests.
-        </p>
-        <div class="cta">
-          <a class="btn primary" href="demo/blocked_exercise.html">See blocked exercise receipt</a>
-          <a class="btn ghost" href="https://github.com/anduril/sample-app-auto-reconnaissance">auto-recon sample</a>
+  <div class="deck-root">
+    <div class="deck-inner">
+      <nav class="top-nav">
+        <div class="nav-pill">
+          <a href="index.html" class="active">Dashboard</a>
+          <a href="run/relay-death-t14.html">Live Runner</a>
+          <a href="vision.html">The Problem</a>
         </div>
-      </div>
-      <div class="term window">
-        <div class="bar"><span></span><span></span><span></span> mesh fate sim</div>
-        <pre><code><span class="p">$</span> lattice-exercise-twin run --mock relay-death-t14
-first_block: T+14.0h (mesh_partition_blocks_investigate_task)
-investigate_tasks: 14
+      </nav>
 
-<span class="p">$</span> lattice-exercise-twin doctor latest
-<span class="bad">verdict: block</span>
-  <span class="bad">[✗]</span> Exercise mission flow blocked at T+14.0h
-  <span class="bad">[✗]</span> Entity stream gap on track-hostile-1</code></pre>
-      </div>
-    </section>
+      <header class="hero" id="overview">
+        <div class="hero-grid">
+          <div>
+            <h1>Exercise Fails First</h1>
+            <p class="tagline">Rehearse Lattice exercises before live fly</p>
+            <p class="lede">
+              Your integration test passes in the sandbox. Then relay node 3 dies at hour 14,
+              track updates stop flowing, and the <strong>Investigate</strong> task never fires.
+              This tool simulates that failure in software — so you find it before the formation does.
+            </p>
+          </div>
+          <dl class="stats-panel">
+            <div><dt>Scenarios</dt><dd>2</dd></div>
+            <div><dt>Mesh nodes</dt><dd>3</dd></div>
+            <div><dt>Exercise length</dt><dd>72h</dd></div>
+            <div><dt>Failure at</dt><dd style="color:var(--danger)">T+14</dd></div>
+          </dl>
+        </div>
+      </header>
 
-    <section class="sim-section" id="sim">
-      <div class="sim-head">
-        <h2 class="serif">Mesh fate replay</h2>
-        <p>Scrub timeline — watch Relay-3 drop at T+14h</p>
-        <input type="range" id="timeline" min="0" max="72" value="14" step="1">
-        <span id="time-label">T+14h</span>
+      <div class="toolbar">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.875rem;">
+          <span class="toolbar-label">View</span>
+          <div class="mode-tabs" role="tablist">
+            <button type="button" data-mode="golden" role="tab">Healthy mesh</button>
+            <button type="button" data-mode="failure" class="active" role="tab">Relay dies T+14</button>
+          </div>
+          <span class="toolbar-hint" id="mode-hint">Relay-3 goes offline at hour 14. Entity updates stop. Investigate tasks block.</span>
+        </div>
+        <span class="badge-live">Mock simulation · no Lattice login</span>
       </div>
-      <div class="mesh-canvas" id="mesh">
-        <svg viewBox="0 0 400 280" id="mesh-svg"></svg>
-        <div id="sim-status" class="status block">Investigate task path blocked</div>
-      </div>
-    </section>
 
-    <section class="section" id="problem">
-      <h2 class="serif">Why formations need exercise twins</h2>
-      <div class="cards">
-        <article><h3>Happy-path SDK samples</h3><p>Auto-recon streams entities → tasks. No relay loss or jamming.</p></article>
-        <article><h3>Mesh without hub</h3><p>Lattice Mesh shares data at the edge — variable links break entity freshness.</p></article>
-        <article><h3>Entity ↔ task coupling</h3><p>Investigate tasks bind to entity IDs — stale tracks silently fail assignment.</p></article>
-        <article><h3>Exercise receipt</h3><p>plan → run → doctor → report before Ivy Mass / NGC2 live hours.</p></article>
+      <div class="panel-grid panel-grid-2">
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>When does the exercise break?</h2>
+              <p>Investigate tasks assign every hour while the mesh is healthy. At T+14 the relay drops and the line flatlines.</p>
+            </div>
+          </header>
+          <div class="panel-body chart-wrap">
+            <canvas id="timeline-chart" class="chart" height="260"></canvas>
+          </div>
+          <footer class="panel-foot">
+            <span>72H EXERCISE · RELAY DEATH SCENARIO</span>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.72rem;text-transform:uppercase;">
+              <span>Healthy</span><span class="gradient-bar"></span><span>Broken</span>
+            </div>
+          </footer>
+        </section>
+
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>Mesh at the failure hour</h2>
+              <p>Three nodes: sensor tower, relay, edge UAV. When the relay dies, the UAV loses the track feed.</p>
+            </div>
+          </header>
+          <div class="panel-body mesh-mini" id="mesh-viz"></div>
+          <footer class="panel-foot">
+            <span id="mesh-status-text">T+14H · RELAY-3 OFFLINE</span>
+          </footer>
+        </section>
       </div>
-    </section>
-  </main>
+
+      <section class="panel" style="margin-top:1.5rem;">
+        <header class="panel-head">
+          <div>
+            <h2>Hour-by-hour mesh health</h2>
+            <p>Each cell is one hour of the exercise. Green = Investigate tasks assigning. Red = relay dead, mission blocked.</p>
+          </div>
+        </header>
+        <div class="panel-body">
+          <div id="heatmap" class="heatmap" aria-label="72 hour health heatmap"></div>
+        </div>
+        <footer class="panel-foot">
+          <span id="heatmap-caption">CLICK A CELL TO JUMP TO THAT HOUR IN LIVE RUNNER</span>
+          <a href="run/relay-death-t14.html" style="color:var(--accent);">Open runner →</a>
+        </footer>
+      </section>
+
+      <div class="panel-grid panel-grid-3" style="margin-top:1.5rem;">
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>Scenario library</h2>
+              <p>Each scenario is a 72-hour formation exercise. Open one in Live Runner to step through what happens hour by hour.</p>
+            </div>
+          </header>
+          <div class="panel-body" style="padding-top:0;">
+            <div class="scenario-list">
+              <a class="scenario-row" href="run/relay-death-t14.html">
+                <div>
+                  <h3>Relay Dies at Hour 14</h3>
+                  <p class="scenario-meta">3 nodes · 1 failure · BLOCK</p>
+                </div>
+                <p class="scenario-desc">The common one: sandbox green, relay lost mid-exercise, Investigate task stops assigning.</p>
+                <span class="scenario-open">Open →</span>
+              </a>
+              <a class="scenario-row" href="run/ci-golden-mesh.html">
+                <div>
+                  <h3>Healthy Formation (CI Golden)</h3>
+                  <p class="scenario-meta">3 nodes · 0 failures · DEPLOY</p>
+                </div>
+                <p class="scenario-desc">Same mesh, no node loss — Investigate tasks keep assigning for all 72 hours.</p>
+                <span class="scenario-open">Open →</span>
+              </a>
+            </div>
+          </div>
+          <footer class="panel-foot">2 SCENARIOS · LIVE RUNNER READY</footer>
+        </section>
+
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>What this measures</h2>
+              <p>Based on Anduril's public auto-reconnaissance sample: stream entities → assign Investigate task when a hostile track is near.</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <div class="receipt-box block" style="margin-bottom:0.75rem;">
+              <div class="verdict-big block">BLOCK</div>
+              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted);">Mission flow stops at T+14h — mesh partition blocks Investigate task</p>
+            </div>
+            <p style="font-size:0.85rem;color:var(--muted);margin:0;">
+              Run locally: <code style="font-family:var(--mono);font-size:0.78rem;color:var(--accent);">lattice-exercise-twin doctor latest</code>
+            </p>
+          </div>
+          <footer class="panel-foot">
+            <a href="https://github.com/Abhishek21g/lattice-exercise-twin" style="color:var(--accent);">GitHub →</a>
+          </footer>
+        </section>
+      </div>
+
+      <footer class="site-foot">
+        <a href="run/relay-death-t14.html">Run a scenario →</a>
+      </footer>
+    </div>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>

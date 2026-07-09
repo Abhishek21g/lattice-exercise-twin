@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Healthy Formation — Live Runner</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="deck-root">
+    <div class="deck-inner">
+      <nav class="top-nav">
+        <div class="nav-pill">
+          <a href="../index.html">Dashboard</a>
+          <a href="relay-death-t14.html" class="active">Live Runner</a>
+          <a href="../vision.html">The Problem</a>
+        </div>
+      </nav>
+
+      <header class="runner-hero">
+        <h1>Healthy Formation (CI Golden)</h1>
+        <p>Same 3-node mesh, zero failures. Investigate tasks keep assigning for the full 72-hour exercise.</p>
+      </header>
+
+      <div class="toolbar">
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <span class="time-readout" id="time-readout">T+0h</span>
+          <input type="range" id="hour-slider" class="timeline-control" min="0" max="72" value="0" style="max-width:280px;">
+          <button type="button" id="btn-play" class="mode-tabs" style="border:none;padding:0.35rem 0.75rem;border-radius:0.375rem;background:var(--ok-soft);color:var(--ok);cursor:pointer;font-family:var(--sans);font-size:0.78rem;font-weight:500;">▶ Play 72h</button>
+        </div>
+        <span class="badge-live">Scenario · ci-golden-mesh</span>
+      </div>
+
+      <div class="runner-layout">
+        <aside class="panel">
+          <header class="panel-head"><h2>What happens</h2></header>
+          <div class="panel-body">
+            <ol class="steps">
+              <li data-hour="0"><strong>Hour 0</strong>All nodes online. CI golden path starts.</li>
+              <li data-hour="12"><strong>Hours 1–71</strong>Track stream flows. Investigate assigns every hour.</li>
+              <li data-hour="72"><strong>Hour 72</strong>Exercise completes with no partition.</li>
+            </ol>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>Mesh view</h2>
+              <p>Sensor, relay, and UAV stay connected for the entire exercise.</p>
+            </div>
+          </header>
+          <div class="panel-body" id="runner-mesh"></div>
+          <div class="panel-body chart-wrap" style="padding-top:0;">
+            <canvas id="runner-chart" height="120"></canvas>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <header class="panel-head"><h2>Verdict receipt</h2></header>
+          <div class="panel-body">
+            <div class="receipt-box pass" id="receipt">
+              <div class="verdict-big pass" id="verdict-text">DEPLOY</div>
+              <p id="receipt-detail" style="margin:0.5rem 0 0;color:var(--muted);font-size:0.85rem;"></p>
+            </div>
+            <p style="font-size:0.82rem;color:var(--muted);margin:1.25rem 0 0.5rem;">Run golden scenario</p>
+            <div class="cli-block">
+              <span class="cmd">lattice-exercise-twin run</span> --scenario ci-golden-mesh<br>
+              <span class="cmd">lattice-exercise-twin doctor</span> latest
+            </div>
+          </div>
+          <footer class="panel-foot">
+            <a href="relay-death-t14.html" style="color:var(--accent);">Try failure scenario →</a>
+          </footer>
+        </aside>
+      </div>
+
+      <footer class="site-foot">
+        <a href="../index.html">← Dashboard</a>
+      </footer>
+    </div>
+  </div>
+  <script>
+    window.RUNNER_CONFIG = {
+      id: "ci-golden-mesh",
+      failureHour: null,
+      totalHours: 72,
+      verdict: "DEPLOY"
+    };
+  </script>
+  <script src="../runner.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relay Dies at Hour 14 — Live Runner</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="deck-root">
+    <div class="deck-inner">
+      <nav class="top-nav">
+        <div class="nav-pill">
+          <a href="../index.html">Dashboard</a>
+          <a href="relay-death-t14.html" class="active">Live Runner</a>
+          <a href="../vision.html">The Problem</a>
+        </div>
+      </nav>
+
+      <header class="runner-hero">
+        <h1>Relay Dies at Hour 14</h1>
+        <p>Drag the timeline or press Play. Watch what happens to the mesh and the Investigate task when relay-3 drops mid-exercise.</p>
+      </header>
+
+      <div class="toolbar">
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <span class="time-readout" id="time-readout">T+0h</span>
+          <input type="range" id="hour-slider" class="timeline-control" min="0" max="72" value="0" style="max-width:280px;">
+          <button type="button" id="btn-play" class="mode-tabs" style="border:none;padding:0.35rem 0.75rem;border-radius:0.375rem;background:var(--accent-soft);color:var(--accent);cursor:pointer;font-family:var(--sans);font-size:0.78rem;font-weight:500;">▶ Play 72h</button>
+        </div>
+        <span class="badge-live">Scenario · relay-death-t14</span>
+      </div>
+
+      <div class="runner-layout">
+        <aside class="panel">
+          <header class="panel-head"><h2>What happens</h2></header>
+          <div class="panel-body">
+            <ol class="steps">
+              <li data-hour="0"><strong>Hour 0</strong>Sandbox passed. Exercise starts with 3 nodes online.</li>
+              <li data-hour="4"><strong>Hours 1–13</strong>Sensor sees hostile track. Investigate task assigns every hour.</li>
+              <li data-hour="14" data-fail="true"><strong>Hour 14</strong>Relay-3 dies. Entity stream to UAV stops.</li>
+              <li data-hour="15" data-fail="true"><strong>Hour 15+</strong>No new Investigate tasks. Mission flow blocked.</li>
+              <li data-hour="72" data-fail="true"><strong>Hour 72</strong>Exercise ends. Verdict: BLOCK deployment.</li>
+            </ol>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>Mesh view</h2>
+              <p>Sensor → Relay → UAV. When the middle node dies, the UAV loses track updates.</p>
+            </div>
+          </header>
+          <div class="panel-body" id="runner-mesh"></div>
+          <div class="panel-body chart-wrap" style="padding-top:0;">
+            <canvas id="runner-chart" height="120"></canvas>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <header class="panel-head"><h2>Verdict receipt</h2></header>
+          <div class="panel-body">
+            <div class="receipt-box" id="receipt">
+              <div class="verdict-big" id="verdict-text">…</div>
+              <p id="receipt-detail" style="margin:0.5rem 0 0;color:var(--muted);font-size:0.85rem;"></p>
+            </div>
+            <p style="font-size:0.82rem;color:var(--muted);margin:1.25rem 0 0.5rem;">Reproduce locally</p>
+            <div class="cli-block">
+              <span class="cmd">lattice-exercise-twin plan</span> examples/platoon-mesh-3node.yaml<br>
+              <span class="cmd">lattice-exercise-twin run</span> --plan platoon-mesh-3node<br>
+              <span class="cmd">lattice-exercise-twin doctor</span> latest
+            </div>
+          </div>
+          <footer class="panel-foot">
+            <a href="ci-golden-mesh.html" style="color:var(--accent);">Try healthy scenario →</a>
+          </footer>
+        </aside>
+      </div>
+
+      <footer class="site-foot">
+        <a href="../index.html">← Dashboard</a>
+      </footer>
+    </div>
+  </div>
+  <script>
+    window.RUNNER_CONFIG = {
+      id: "relay-death-t14",
+      failureHour: 14,
+      totalHours: 72,
+      verdict: "BLOCK"
+    };
+  </script>
+  <script src="../runner.js"></script>
+</body>
+</html>

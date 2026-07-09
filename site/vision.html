@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Problem — Exercise Fails First</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="deck-root">
+    <div class="deck-inner">
+      <nav class="top-nav">
+        <div class="nav-pill">
+          <a href="index.html">Dashboard</a>
+          <a href="run/relay-death-t14.html">Live Runner</a>
+          <a href="vision.html" class="active">The Problem</a>
+        </div>
+      </nav>
+
+      <header class="hero">
+        <h1>The problem, in plain English</h1>
+        <p class="lede" style="margin-top:1rem;">
+          Anduril teams run formation exercises on Lattice — multiple nodes sharing tracks and tasks over a mesh.
+          The integration test in sandbox looks fine. Then something breaks hours into the live exercise.
+        </p>
+      </header>
+
+      <div class="callout">
+        Sandbox passes. Hour 14 doesn't.
+      </div>
+
+      <article class="prose-section">
+        <h2>What goes wrong</h2>
+        <p>
+          Imagine three nodes: a sensor tower, a relay, and a UAV at the edge. The sensor sees a hostile track
+          and publishes it on the Entities stream. Your app listens and assigns an <strong>Investigate</strong> task
+          to the nearest asset.
+        </p>
+        <p>
+          In the sandbox, all three nodes are always online. Tasks assign. Tests pass. You ship.
+        </p>
+        <p>
+          In a 72-hour field exercise, relay-3 dies at hour 14. The UAV stops getting entity updates.
+          Investigate tasks stop assigning. Nobody notices until the exercise is already broken.
+        </p>
+
+        <h2>What this tool does</h2>
+        <p>
+          <strong>Exercise Fails First</strong> (Lattice Exercise Twin) simulates that exercise in software before you fly.
+          You define your mesh, pick a failure scenario, and get a clear verdict: <span style="color:var(--ok)">DEPLOY</span> or <span style="color:var(--danger)">BLOCK</span>.
+        </p>
+        <ul>
+          <li><strong>plan</strong> — load your mesh YAML</li>
+          <li><strong>run</strong> — simulate 72 hours with optional node failures</li>
+          <li><strong>doctor</strong> — read the verdict receipt</li>
+          <li><strong>report</strong> — export HTML timeline for your team</li>
+        </ul>
+
+        <h2>Where it comes from</h2>
+        <p>
+          Built from Anduril's public <em>sample-app-auto-reconnaissance</em> pattern: stream entities, assign Investigate when a track is near.
+          Mock mode runs without Lattice credentials. Live mode connects to your sandbox when you're ready.
+        </p>
+      </article>
+
+      <div class="panel-grid" style="margin-top:2.5rem;">
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>See it yourself</h2>
+              <p>Open the failure scenario and scrub to hour 14.</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <a href="run/relay-death-t14.html" class="scenario-open" style="font-size:1rem;">Open Live Runner →</a>
+          </div>
+        </section>
+      </div>
+
+      <footer class="site-foot">
+        <a href="https://github.com/Abhishek21g/lattice-exercise-twin">GitHub</a>
+        <a href="index.html">Dashboard</a>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
