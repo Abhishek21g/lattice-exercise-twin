@@ -109,13 +109,13 @@
       <svg viewBox="0 0 420 200" width="420" height="200" aria-label="Mesh topology">
         <line x1="80" y1="100" x2="210" y2="100" stroke="${relayOk ? 'rgba(110,181,255,0.5)' : 'rgba(240,84,74,0.25)'}" stroke-width="2" stroke-dasharray="${relayOk ? '0' : '6 4'}"/>
         <line x1="210" y1="100" x2="340" y2="100" stroke="${relayOk ? 'rgba(110,181,255,0.5)' : 'rgba(240,84,74,0.25)'}" stroke-width="2" stroke-dasharray="${relayOk ? '0' : '6 4'}"/>
-        <circle cx="80" cy="100" r="36" fill="var(--surface)" stroke="${stroke(sensorOk)}" stroke-width="2"/>
+        <circle cx="80" cy="100" r="36" fill="#16161a" stroke="${stroke(sensorOk)}" stroke-width="2"/>
         <circle cx="80" cy="100" r="8" fill="${color(sensorOk)}"/>
         <text x="80" y="155" text-anchor="middle" fill="#8b909a" font-size="11" font-family="Inter,sans-serif">Sensor</text>
-        <circle cx="210" cy="100" r="36" fill="var(--surface)" stroke="${stroke(relayOk)}" stroke-width="2"/>
+        <circle cx="210" cy="100" r="36" fill="#16161a" stroke="${stroke(relayOk)}" stroke-width="2"/>
         <circle cx="210" cy="100" r="8" fill="${color(relayOk)}"/>
         <text x="210" y="155" text-anchor="middle" fill="#8b909a" font-size="11" font-family="Inter,sans-serif">Relay-3</text>
-        <circle cx="340" cy="100" r="36" fill="var(--surface)" stroke="${stroke(uavOk)}" stroke-width="2"/>
+        <circle cx="340" cy="100" r="36" fill="#16161a" stroke="${stroke(uavOk)}" stroke-width="2"/>
         <circle cx="340" cy="100" r="8" fill="${color(uavOk)}"/>
         <text x="340" y="155" text-anchor="middle" fill="#8b909a" font-size="11" font-family="Inter,sans-serif">Edge UAV</text>
         ${relayDead ? '<text x="210" y="55" text-anchor="middle" fill="#f0544a" font-size="12" font-family="Inter,sans-serif">Partitioned</text>' : ''}

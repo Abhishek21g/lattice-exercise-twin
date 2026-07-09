@@ -3,7 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Why Lattice formation exercises pass in sandbox but break at hour 14 — and how to rehearse failures first.">
+  <meta property="og:title" content="Exercise Fails First — The Problem">
+  <meta property="og:description" content="Sandbox passes. Hour 14 doesn't. Rehearse mesh failures before live fly.">
+  <meta property="og:image" content="https://enaguthi.com/lattice-exercise-twin/site/favicon.svg">
   <title>The Problem — Exercise Fails First</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,70 +26,165 @@
       </nav>
 
       <header class="hero">
-        <h1>The problem, in plain English</h1>
-        <p class="lede" style="margin-top:1rem;">
-          Anduril teams run formation exercises on Lattice — multiple nodes sharing tracks and tasks over a mesh.
-          The integration test in sandbox looks fine. Then something breaks hours into the live exercise.
-        </p>
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Lattice formation exercises</p>
+            <h1>Sandbox passes.<br>Hour 14 doesn't.</h1>
+            <p class="tagline">Why your integration test lies — and what to do about it</p>
+            <p class="lede">
+              Three nodes share tracks over a mesh. Your app assigns an <strong>Investigate</strong> task when a hostile entity appears.
+              In the sandbox, everything stays online. In a 72-hour field exercise, the relay dies — and nobody notices until the mission is already broken.
+            </p>
+            <div class="hero-actions">
+              <a class="btn-primary" href="run/relay-death-t14.html">Watch it break at hour 14 →</a>
+              <a class="btn-ghost" href="index.html">Dashboard</a>
+            </div>
+          </div>
+          <dl class="stats-panel">
+            <div><dt>Mesh nodes</dt><dd>3</dd></div>
+            <div><dt>Exercise</dt><dd>72h</dd></div>
+            <div><dt>Failure</dt><dd style="color:var(--danger)">T+14</dd></div>
+            <div><dt>Verdict</dt><dd style="color:var(--danger);font-size:1.6rem">BLOCK</dd></div>
+          </dl>
+        </div>
       </header>
 
-      <div class="callout">
-        Sandbox passes. Hour 14 doesn't.
+      <div class="toolbar">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.875rem;">
+          <span class="toolbar-label">Compare</span>
+          <div class="mode-tabs" role="tablist" id="compare-tabs">
+            <button type="button" data-view="sandbox" class="active" role="tab">Sandbox (passes)</button>
+            <button type="button" data-view="field" role="tab">Hour 14 (breaks)</button>
+          </div>
+          <span class="toolbar-hint" id="compare-hint">All nodes online. Investigate task assigns every hour. CI is green.</span>
+        </div>
       </div>
 
-      <article class="prose-section">
-        <h2>What goes wrong</h2>
-        <p>
-          Imagine three nodes: a sensor tower, a relay, and a UAV at the edge. The sensor sees a hostile track
-          and publishes it on the Entities stream. Your app listens and assigns an <strong>Investigate</strong> task
-          to the nearest asset.
-        </p>
-        <p>
-          In the sandbox, all three nodes are always online. Tasks assign. Tests pass. You ship.
-        </p>
-        <p>
-          In a 72-hour field exercise, relay-3 dies at hour 14. The UAV stops getting entity updates.
-          Investigate tasks stop assigning. Nobody notices until the exercise is already broken.
-        </p>
+      <div class="panel-grid panel-grid-2" style="margin-top:1.5rem;">
+        <article class="compare-card compare-pass" id="card-sandbox">
+          <span class="compare-label">Sandbox · CI green</span>
+          <h3>What you see in integration test</h3>
+          <ul class="compare-list">
+            <li>Sensor, relay, and UAV always connected</li>
+            <li>Entity stream flows continuously</li>
+            <li>Investigate task assigns on every track update</li>
+            <li>Tests pass → you ship</li>
+          </ul>
+        </article>
+        <article class="compare-card compare-fail" id="card-field">
+          <span class="compare-label">Field · T+14h</span>
+          <h3>What actually happens in exercise</h3>
+          <ul class="compare-list">
+            <li>Relay-3 dies at hour 14</li>
+            <li>UAV stops receiving entity updates</li>
+            <li>Investigate task stops assigning</li>
+            <li>Exercise broken — discovered too late</li>
+          </ul>
+        </article>
+      </div>
 
-        <h2>What this tool does</h2>
-        <p>
-          <strong>Exercise Fails First</strong> (Lattice Exercise Twin) simulates that exercise in software before you fly.
-          You define your mesh, pick a failure scenario, and get a clear verdict: <span style="color:var(--ok)">DEPLOY</span> or <span style="color:var(--danger)">BLOCK</span>.
-        </p>
-        <ul>
-          <li><strong>plan</strong> — load your mesh YAML</li>
-          <li><strong>run</strong> — simulate 72 hours with optional node failures</li>
-          <li><strong>doctor</strong> — read the verdict receipt</li>
-          <li><strong>report</strong> — export HTML timeline for your team</li>
-        </ul>
+      <section class="panel" style="margin-top:1.5rem;">
+        <header class="panel-head">
+          <div>
+            <h2>Mission flow</h2>
+            <p id="flow-caption">Sensor sees track → relay forwards → UAV gets Investigate task. Toggle above to see what changes at hour 14.</p>
+          </div>
+        </header>
+        <div class="panel-body">
+          <div class="flow-diagram" id="flow-diagram" aria-label="Mesh mission flow diagram"></div>
+          <div class="flow-steps" id="flow-steps">
+            <div class="flow-step active" data-step="0"><strong>Step 1</strong>Sensor detects hostile track</div>
+            <div class="flow-step" data-step="1"><strong>Step 2</strong>Entity published to stream</div>
+            <div class="flow-step" data-step="2"><strong>Step 3</strong>Relay forwards to UAV</div>
+            <div class="flow-step" data-step="3"><strong>Step 4</strong>Investigate task assigned</div>
+          </div>
+        </div>
+        <footer class="panel-foot">
+          <span id="flow-status">ALL NODES ONLINE · TASKS ASSIGNING</span>
+          <span>Based on sample-app-auto-reconnaissance</span>
+        </footer>
+      </section>
 
-        <h2>Where it comes from</h2>
-        <p>
-          Built from Anduril's public <em>sample-app-auto-reconnaissance</em> pattern: stream entities, assign Investigate when a track is near.
-          Mock mode runs without Lattice credentials. Live mode connects to your sandbox when you're ready.
-        </p>
-      </article>
-
-      <div class="panel-grid" style="margin-top:2.5rem;">
+      <div class="panel-grid panel-grid-2" style="margin-top:1.5rem;">
         <section class="panel">
           <header class="panel-head">
             <div>
-              <h2>See it yourself</h2>
-              <p>Open the failure scenario and scrub to hour 14.</p>
+              <h2>72-hour timeline</h2>
+              <p>Green = healthy. Red = relay dead, mission blocked.</p>
             </div>
           </header>
           <div class="panel-body">
-            <a href="run/relay-death-t14.html" class="scenario-open" style="font-size:1rem;">Open Live Runner →</a>
+            <div class="mini-timeline" id="mini-timeline" aria-hidden="true"></div>
+            <p style="margin:1rem 0 0;font-size:0.88rem;color:var(--muted);">
+              <span style="color:var(--ok)">■</span> Hours 0–13: 1 Investigate task/hr &nbsp;
+              <span style="color:var(--danger)">■</span> Hours 14–72: 0 tasks/hr
+            </p>
           </div>
+        </section>
+
+        <section class="panel">
+          <header class="panel-head">
+            <div>
+              <h2>The fix</h2>
+              <p>Simulate the exercise in software before you fly.</p>
+            </div>
+          </header>
+          <div class="panel-body">
+            <div class="receipt-box block">
+              <div class="verdict-big block">BLOCK</div>
+              <p style="margin:0.5rem 0 0;font-size:0.88rem;color:var(--muted);">
+                Rehearse relay-death at T+14 in mock mode — get a verdict receipt before live exercise.
+              </p>
+            </div>
+          </div>
+          <footer class="panel-foot">
+            <a href="run/relay-death-t14.html" style="color:var(--accent);">Open live runner →</a>
+          </footer>
         </section>
       </div>
 
+      <section class="panel" style="margin-top:1.5rem;">
+        <header class="panel-head">
+          <div>
+            <h2>Four commands</h2>
+            <p>Same workflow as Jetson ML Workbench — plan, run, doctor, report.</p>
+          </div>
+        </header>
+        <div class="panel-body">
+          <div class="cmd-grid">
+            <article class="cmd-card">
+              <h3>plan</h3>
+              <p>Load your 3-node mesh YAML. Define which node fails and when.</p>
+            </article>
+            <article class="cmd-card">
+              <h3>run</h3>
+              <p>Simulate 72 hours. Mock mode — no Lattice login required.</p>
+            </article>
+            <article class="cmd-card">
+              <h3>doctor</h3>
+              <p>Read the verdict: DEPLOY if tasks keep assigning, BLOCK if mesh partitions.</p>
+            </article>
+            <article class="cmd-card">
+              <h3>report</h3>
+              <p>Export an HTML timeline your team can share before live fly.</p>
+            </article>
+          </div>
+          <div class="cli-block" style="margin-top:1.25rem;">
+            <span class="cmd">lattice-exercise-twin plan</span> examples/platoon-mesh-3node.yaml<br>
+            <span class="cmd">lattice-exercise-twin run</span> --plan platoon-mesh-3node<br>
+            <span class="cmd">lattice-exercise-twin doctor</span> latest
+          </div>
+        </div>
+        <footer class="panel-foot">
+          <a href="https://github.com/Abhishek21g/lattice-exercise-twin" style="color:var(--accent);">GitHub →</a>
+        </footer>
+      </section>
+
       <footer class="site-foot">
-        <a href="https://github.com/Abhishek21g/lattice-exercise-twin">GitHub</a>
-        <a href="index.html">Dashboard</a>
+        <a href="run/relay-death-t14.html">Run a scenario →</a>
       </footer>
     </div>
   </div>
+  <script src="vision.js"></script>
 </body>
 </html>
