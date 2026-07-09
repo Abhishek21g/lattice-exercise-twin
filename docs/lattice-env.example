@@ -1,0 +1,5 @@
+# Copy to ~/.config/lattice-exercise-twin/env and source before --live runs
+export LATTICE_ENDPOINT="your-env.anduril.io"
+export LATTICE_CLIENT_ID="your-client-id"
+export LATTICE_CLIENT_SECRET="your-client-secret"
+export SANDBOXES_TOKEN="your-sandboxes-token"

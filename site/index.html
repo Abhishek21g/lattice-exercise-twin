@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Rehearse Lattice mesh exercise fate before live fly — entity stream gaps, relay loss, Investigate task failure.">
+  <title>Lattice Exercise Twin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top"><span class="glyph">◈</span> Lattice Exercise Twin</a>
+    <nav>
+      <a href="#problem">Problem</a>
+      <a href="#sim">Simulation</a>
+      <a href="demo/blocked_exercise.html">Receipt</a>
+    </nav>
+    <a class="btn primary" href="https://github.com/Abhishek21g/lattice-exercise-twin">GitHub</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Lattice Mesh · Entities · Tasks API</p>
+        <h1 class="serif">Your sandbox passes.<br>The exercise still dies at hour 14.</h1>
+        <p class="lede">
+          Sample apps stream entities and create <strong>Investigate</strong> tasks on the happy path.
+          Formations lose relay nodes, entity streams gap, and task assignment fails — after green integration tests.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="demo/blocked_exercise.html">See blocked exercise receipt</a>
+          <a class="btn ghost" href="https://github.com/anduril/sample-app-auto-reconnaissance">auto-recon sample</a>
+        </div>
+      </div>
+      <div class="term window">
+        <div class="bar"><span></span><span></span><span></span> mesh fate sim</div>
+        <pre><code><span class="p">$</span> lattice-exercise-twin run --mock relay-death-t14
+first_block: T+14.0h (mesh_partition_blocks_investigate_task)
+investigate_tasks: 14
+
+<span class="p">$</span> lattice-exercise-twin doctor latest
+<span class="bad">verdict: block</span>
+  <span class="bad">[✗]</span> Exercise mission flow blocked at T+14.0h
+  <span class="bad">[✗]</span> Entity stream gap on track-hostile-1</code></pre>
+      </div>
+    </section>
+
+    <section class="sim-section" id="sim">
+      <div class="sim-head">
+        <h2 class="serif">Mesh fate replay</h2>
+        <p>Scrub timeline — watch Relay-3 drop at T+14h</p>
+        <input type="range" id="timeline" min="0" max="72" value="14" step="1">
+        <span id="time-label">T+14h</span>
+      </div>
+      <div class="mesh-canvas" id="mesh">
+        <svg viewBox="0 0 400 280" id="mesh-svg"></svg>
+        <div id="sim-status" class="status block">Investigate task path blocked</div>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <h2 class="serif">Why formations need exercise twins</h2>
+      <div class="cards">
+        <article><h3>Happy-path SDK samples</h3><p>Auto-recon streams entities → tasks. No relay loss or jamming.</p></article>
+        <article><h3>Mesh without hub</h3><p>Lattice Mesh shares data at the edge — variable links break entity freshness.</p></article>
+        <article><h3>Entity ↔ task coupling</h3><p>Investigate tasks bind to entity IDs — stale tracks silently fail assignment.</p></article>
+        <article><h3>Exercise receipt</h3><p>plan → run → doctor → report before Ivy Mass / NGC2 live hours.</p></article>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

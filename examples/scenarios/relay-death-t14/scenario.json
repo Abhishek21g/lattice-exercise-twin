@@ -1,0 +1,41 @@
+{
+  "duration_hours": 72,
+  "mesh": {
+    "nodes": [
+      {"id": "relay-3", "role": "relay"},
+      {"id": "uav-orin-07", "role": "edge"},
+      {"id": "tower-12", "role": "sensor"}
+    ],
+    "links": [
+      ["relay-3", "uav-orin-07"],
+      ["relay-3", "tower-12"]
+    ]
+  },
+  "asset_entity_id": "asset-alpha",
+  "track_entity_id": "track-hostile-1",
+  "asset_node": "uav-orin-07",
+  "track_node": "tower-12",
+  "arbiter_node": "relay-3",
+  "range_miles": 5,
+  "entity_stale_seconds": 120,
+  "gap_alert_seconds": 30,
+  "entities": [
+    {
+      "entity_id": "asset-alpha",
+      "template": "TEMPLATE_ASSET",
+      "publisher_node": "uav-orin-07",
+      "position": {"lat": 33.69, "lon": -117.92}
+    },
+    {
+      "entity_id": "track-hostile-1",
+      "template": "TEMPLATE_TRACK",
+      "disposition": "DISPOSITION_HOSTILE",
+      "publisher_node": "tower-12",
+      "position": {"lat": 33.70, "lon": -117.91}
+    }
+  ],
+  "timeline": [
+    {"at_hour": 14, "type": "node_loss", "node": "relay-3", "detail": "relay lost during exercise"}
+  ],
+  "min_investigate_tasks": 1
+}

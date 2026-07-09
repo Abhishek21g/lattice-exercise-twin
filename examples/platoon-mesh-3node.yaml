@@ -1,0 +1,21 @@
+name: platoon-mesh-3node
+duration_hours: 72
+description: >
+  Three-node platoon mesh — relay, edge UAV, tower sensor — mirroring
+  sample-app-auto-reconnaissance Investigate task flow under exercise stress.
+
+mesh:
+  nodes:
+    - id: relay-3
+      role: relay
+    - id: uav-orin-07
+      role: edge
+    - id: tower-12
+      role: sensor
+  links:
+    - [relay-3, uav-orin-07]
+    - [relay-3, tower-12]
+
+golden_scenario: examples/scenarios/ci-golden-mesh
+failure_scenario: examples/scenarios/relay-death-t14
+max_entity_gap_hours: 0.05
