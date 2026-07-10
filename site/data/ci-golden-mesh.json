@@ -1,0 +1,121 @@
+{
+  "scenario_id": "ci-golden-mesh",
+  "run_id": null,
+  "generated_at": null,
+  "mode": "mock",
+  "plan_name": "platoon-mesh-3node",
+  "duration_hours": 72,
+  "failure_hour": null,
+  "block_reason": null,
+  "tasks_total": 73,
+  "hourly_investigate_tasks": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "verdict": "deploy",
+  "findings": [],
+  "golden_tasks": null,
+  "mesh": {
+    "nodes": [
+      {
+        "id": "relay-3",
+        "role": "relay"
+      },
+      {
+        "id": "uav-orin-07",
+        "role": "edge"
+      },
+      {
+        "id": "tower-12",
+        "role": "sensor"
+      }
+    ],
+    "links": [
+      [
+        "relay-3",
+        "uav-orin-07"
+      ],
+      [
+        "relay-3",
+        "tower-12"
+      ]
+    ],
+    "offline_node": null,
+    "final_online": [
+      "relay-3",
+      "tower-12",
+      "uav-orin-07"
+    ]
+  }
+}

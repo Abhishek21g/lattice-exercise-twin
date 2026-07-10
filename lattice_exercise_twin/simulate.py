@@ -182,11 +182,19 @@ def simulate_exercise(
 
         hour += step_hours
 
+    duration_int = int(duration)
+    hourly = [0] * (duration_int + 1)
+    for task in state.tasks_created:
+        hi = int(task["at_hour"])
+        if 0 <= hi <= duration_int:
+            hourly[hi] += 1
+
     return {
         "duration_hours": duration,
         "nodes": list(nodes.keys()),
         "timeline_applied": len(timeline),
         "tasks_created": len(state.tasks_created),
+        "hourly_investigate_tasks": hourly,
         "min_investigate_tasks": scenario.get("min_investigate_tasks"),
         "stream_gaps": state.stream_gaps,
         "events": [

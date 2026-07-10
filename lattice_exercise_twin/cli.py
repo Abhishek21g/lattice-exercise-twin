@@ -55,6 +55,10 @@ def build_parser() -> argparse.ArgumentParser:
     chk = sub.add_parser("check-env", help="Verify Lattice sandbox env vars")
     chk.set_defaults(handler=_cmd_check_env)
 
+    sync = sub.add_parser("sync-site", help="Export latest run data to site/data/")
+    sync.add_argument("run_id", nargs="?", default="latest")
+    sync.set_defaults(handler=_cmd_sync_site)
+
     return p
 
 
@@ -115,6 +119,19 @@ def _cmd_check_env(args: argparse.Namespace) -> int:
         return 1
     print(f"LATTICE_ENDPOINT={env['LATTICE_ENDPOINT']}")
     print("sandbox token:", "set" if env.get("SANDBOXES_TOKEN") else "optional/missing")
+    return 0
+
+
+def _cmd_sync_site(args: argparse.Namespace) -> int:
+    from lattice_exercise_twin.paths import load_manifest
+    from lattice_exercise_twin.site_export import export_site
+
+    rid = resolve_run_id(args.run_id)
+    manifest = load_manifest(rid)
+    if not manifest.get("doctor"):
+        manifest = doctor_run(rid)
+    for path in export_site(manifest):
+        print(f"synced {path}")
     return 0
 
 

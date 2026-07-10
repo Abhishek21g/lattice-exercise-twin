@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#09090b"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#111114" stroke="rgba(237,234,233,0.1)" stroke-width="2"/>
+  <text x="96" y="160" fill="#edeae9" font-family="Georgia, serif" font-size="72" font-weight="500">Exercise Fails First</text>
+  <text x="96" y="230" fill="#8b909a" font-family="system-ui, sans-serif" font-size="32">Sandbox passes. Hour 14 doesn't.</text>
+  <text x="96" y="290" fill="#b4b8c0" font-family="system-ui, sans-serif" font-size="22">Rehearse Lattice mesh failures before live fly</text>
+  <circle cx="220" cy="420" r="36" fill="#16161a" stroke="#3ec97a" stroke-width="3"/>
+  <circle cx="220" cy="420" r="10" fill="#3ec97a"/>
+  <text x="220" y="480" text-anchor="middle" fill="#8b909a" font-size="16">Sensor</text>
+  <circle cx="600" cy="420" r="36" fill="#16161a" stroke="#f0544a" stroke-width="3"/>
+  <circle cx="600" cy="420" r="10" fill="#f0544a"/>
+  <text x="600" y="480" text-anchor="middle" fill="#8b909a" font-size="16">Relay-3</text>
+  <circle cx="980" cy="420" r="36" fill="#16161a" stroke="#f0544a" stroke-width="3"/>
+  <circle cx="980" cy="420" r="10" fill="#f0544a"/>
+  <text x="980" y="480" text-anchor="middle" fill="#8b909a" font-size="16">Edge UAV</text>
+  <line x1="256" y1="420" x2="564" y2="420" stroke="rgba(240,84,74,0.35)" stroke-width="3" stroke-dasharray="8 6"/>
+  <line x1="636" y1="420" x2="944" y2="420" stroke="rgba(240,84,74,0.35)" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="600" y="370" text-anchor="middle" fill="#f0544a" font-family="system-ui, sans-serif" font-size="20" font-weight="600">BLOCK at T+14</text>
+  <rect x="96" y="520" width="140" height="44" rx="22" fill="#f0544a"/>
+  <text x="166" y="549" text-anchor="middle" fill="#09090b" font-family="system-ui, sans-serif" font-size="18" font-weight="700">BLOCK</text>
+  <text x="260" y="549" fill="#6eb5ff" font-family="ui-monospace, monospace" font-size="16">lattice-exercise-twin doctor latest</text>
+</svg>

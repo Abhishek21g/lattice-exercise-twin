@@ -6,7 +6,7 @@
   <meta name="description" content="Rehearse Lattice formation exercises before hour 14 kills your mission.">
   <meta property="og:title" content="Exercise Fails First">
   <meta property="og:description" content="Rehearse Lattice mesh failures before live fly.">
-  <meta property="og:image" content="https://enaguthi.com/lattice-exercise-twin/site/favicon.svg">
+  <meta property="og:image" content="https://enaguthi.com/lattice-exercise-twin/site/og-preview.svg">
   <title>Exercise Fails First</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +40,8 @@
             <div><dt>Scenarios</dt><dd>2</dd></div>
             <div><dt>Mesh nodes</dt><dd>3</dd></div>
             <div><dt>Exercise length</dt><dd>72h</dd></div>
-            <div><dt>Failure at</dt><dd style="color:var(--danger)">T+14</dd></div>
+            <div><dt>Tasks before block</dt><dd id="stat-tasks">14</dd></div>
+            <div><dt>Verdict</dt><dd id="stat-verdict" style="color:var(--danger)">BLOCK</dd></div>
           </dl>
         </div>
       </header>
@@ -54,7 +55,7 @@
           </div>
           <span class="toolbar-hint" id="mode-hint">Relay-3 goes offline at hour 14. Entity updates stop. Investigate tasks block.</span>
         </div>
-        <span class="badge-live">Mock simulation · no Lattice login</span>
+        <span class="badge-live" id="run-badge">Syncing live data…</span>
       </div>
 
       <div class="panel-grid panel-grid-2">
@@ -149,9 +150,10 @@
               <div class="verdict-big block">BLOCK</div>
               <p style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted);">Mission flow stops at T+14h — mesh partition blocks Investigate task</p>
             </div>
-            <p style="font-size:0.85rem;color:var(--muted);margin:0;">
+            <p style="font-size:0.85rem;color:var(--muted);margin:0 0 0.75rem;">
               Run locally: <code style="font-family:var(--mono);font-size:0.78rem;color:var(--accent);">lattice-exercise-twin doctor latest</code>
             </p>
+            <a href="demo/blocked_receipt.html" class="btn-primary" style="font-size:0.82rem;">See real BLOCK receipt →</a>
           </div>
           <footer class="panel-foot">
             <a href="https://github.com/Abhishek21g/lattice-exercise-twin" style="color:var(--accent);">GitHub →</a>
@@ -164,6 +166,8 @@
       </footer>
     </div>
   </div>
+  <script src="data-loader.js"></script>
+  <script src="reviewer.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

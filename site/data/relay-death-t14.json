@@ -1,0 +1,149 @@
+{
+  "scenario_id": "relay-death-t14",
+  "run_id": "run_20260710T013551Z",
+  "generated_at": "2026-07-10T01:35:51.929906+00:00",
+  "mode": "mock",
+  "plan_name": "platoon-mesh-3node",
+  "duration_hours": 72,
+  "failure_hour": 14.0,
+  "block_reason": "mesh_partition_blocks_investigate_task",
+  "tasks_total": 14,
+  "hourly_investigate_tasks": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "verdict": "block",
+  "findings": [
+    {
+      "id": "exercise:mission_block",
+      "severity": "critical",
+      "title": "Exercise mission flow blocked at T+14.0h",
+      "detail": "mesh_partition_blocks_investigate_task",
+      "remediation": "Rehearse mesh failover before live exercise; restore relay path or edge cache policy."
+    },
+    {
+      "id": "stream:gap:asset-alpha",
+      "severity": "critical",
+      "title": "Entity stream gap 1.0h on asset-alpha",
+      "detail": "Lattice entity long-poll consumers saw stale track/asset \u2014 fusion desync risk.",
+      "remediation": "Add stream gap alerting; block OTA during active Investigate tasks."
+    },
+    {
+      "id": "stream:gap:track-hostile-1",
+      "severity": "critical",
+      "title": "Entity stream gap 1.0h on track-hostile-1",
+      "detail": "Lattice entity long-poll consumers saw stale track/asset \u2014 fusion desync risk.",
+      "remediation": "Add stream gap alerting; block OTA during active Investigate tasks."
+    },
+    {
+      "id": "mesh:node_loss:relay-3",
+      "severity": "warning",
+      "title": "Node loss at T+14.0h",
+      "detail": "relay-3 offline",
+      "remediation": ""
+    }
+  ],
+  "golden_tasks": 73,
+  "mesh": {
+    "nodes": [
+      {
+        "id": "relay-3",
+        "role": "relay"
+      },
+      {
+        "id": "uav-orin-07",
+        "role": "edge"
+      },
+      {
+        "id": "tower-12",
+        "role": "sensor"
+      }
+    ],
+    "links": [
+      [
+        "relay-3",
+        "uav-orin-07"
+      ],
+      [
+        "relay-3",
+        "tower-12"
+      ]
+    ],
+    "offline_node": "relay-3",
+    "final_online": [
+      "tower-12",
+      "uav-orin-07"
+    ]
+  }
+}

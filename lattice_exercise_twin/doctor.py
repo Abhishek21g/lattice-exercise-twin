@@ -36,4 +36,10 @@ def doctor_run(run_id: str | None = None) -> dict[str, Any]:
         "golden_tasks": (golden_probe or {}).get("tasks_created"),
     }
     save_manifest(rid, manifest)
+    try:
+        from lattice_exercise_twin.site_export import export_site
+
+        export_site(manifest)
+    except OSError:
+        pass
     return manifest

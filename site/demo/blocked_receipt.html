@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BLOCK receipt — Exercise Fails First</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="report-page" data-data-prefix="../">
+  <div class="deck-root">
+    <div class="deck-inner report-shell">
+      <nav class="top-nav" style="padding-top:0.5rem;">
+        <div class="nav-pill">
+          <a href="../index.html">Dashboard</a>
+          <a href="../run/relay-death-t14.html">Live Runner</a>
+          <a href="../vision.html">The Problem</a>
+        </div>
+      </nav>
+
+      <header class="report-hero">
+        <p class="eyebrow"><a href="../index.html" style="color:var(--accent);">← Exercise Fails First</a></p>
+        <p class="eyebrow" id="receipt-run-id">Mission receipt</p>
+        <h1>Verdict: <span class="verdict-big block" id="receipt-verdict">BLOCK</span></h1>
+        <p class="lede" id="receipt-lede">platoon-mesh-3node · 72h exercise</p>
+        <p class="block-at" id="receipt-block-at">Blocked at T+14h</p>
+      </header>
+
+      <div class="panel-grid panel-grid-2">
+        <section class="panel">
+          <header class="panel-head"><h2>Mesh at verdict</h2></header>
+          <div class="panel-body mesh-grid" id="receipt-mesh"></div>
+        </section>
+        <section class="panel">
+          <header class="panel-head"><h2>Exercise stats</h2></header>
+          <div class="panel-body">
+            <dl class="stats-panel" style="max-width:none;border:none;padding:0;">
+              <div><dt>Investigate tasks</dt><dd id="stat-task-total">—</dd></div>
+              <div><dt>Failure hour</dt><dd id="stat-failure-hour" style="color:var(--danger)">—</dd></div>
+              <div><dt>Golden baseline</dt><dd id="stat-golden-tasks">—</dd></div>
+              <div><dt>Mode</dt><dd id="stat-mode" style="font-size:1.2rem">mock</dd></div>
+            </dl>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel" style="margin-top:1.5rem;">
+        <header class="panel-head">
+          <div>
+            <h2>Doctor findings</h2>
+            <p>From <code style="font-family:var(--mono);color:var(--accent);">lattice-exercise-twin doctor latest</code> — real CLI output.</p>
+          </div>
+        </header>
+        <div class="panel-body findings-body" id="receipt-findings"></div>
+        <footer class="panel-foot">
+          <a href="https://github.com/Abhishek21g/lattice-exercise-twin" style="color:var(--accent);">GitHub →</a>
+        </footer>
+      </section>
+    </div>
+  </div>
+  <script src="../data-loader.js"></script>
+  <script src="../reviewer.js"></script>
+  <script>
+    (async function () {
+      const data = await window.LatticeSiteData.loadScenario("relay-death-t14");
+      document.getElementById("receipt-run-id").textContent = "Mission receipt · " + (data.run_id || "mock");
+      document.getElementById("receipt-lede").textContent =
+        (data.plan_name || "platoon-mesh-3node") + " · " + (data.duration_hours || 72) + "h exercise";
+      document.getElementById("receipt-block-at").textContent =
+        data.failure_hour != null ? "Blocked at T+" + data.failure_hour + "h — " + (data.block_reason || "") : "";
+      document.getElementById("stat-task-total").textContent = String(data.tasks_total ?? "—");
+      document.getElementById("stat-failure-hour").textContent =
+        data.failure_hour != null ? "T+" + data.failure_hour : "—";
+      document.getElementById("stat-golden-tasks").textContent = String(data.golden_tasks ?? "—");
+      document.getElementById("stat-mode").textContent = data.mode || "mock";
+
+      const online = new Set(data.mesh?.final_online || []);
+      const meshEl = document.getElementById("receipt-mesh");
+      meshEl.innerHTML = (data.mesh?.nodes || []).map((n) => {
+        const ok = online.has(n.id);
+        return `<div class="mesh-node ${ok ? "ok" : "bad"}"><span>${n.id}</span><small>${n.role || ""}</small></div>`;
+      }).join("");
+
+      const findingsEl = document.getElementById("receipt-findings");
+      findingsEl.innerHTML = (data.findings || []).map((f) => `
+        <article class="finding-card ${f.severity}">
+          <span class="finding-sev">${f.severity}</span>
+          <h4>${f.title}</h4>
+          <p>${f.detail}</p>
+        </article>`).join("") || "<p>No findings.</p>";
+    })();
+  </script>
+</body>
+</html>

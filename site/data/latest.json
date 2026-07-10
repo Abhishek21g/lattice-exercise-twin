@@ -1,0 +1,10 @@
+{
+  "run_id": "run_20260710T013551Z",
+  "generated_at": "2026-07-10T01:35:51.929906+00:00",
+  "verdict": "block",
+  "failure_hour": 14.0,
+  "scenarios": {
+    "relay-death-t14": "data/relay-death-t14.json",
+    "ci-golden-mesh": "data/ci-golden-mesh.json"
+  }
+}
