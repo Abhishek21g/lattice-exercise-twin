@@ -18,10 +18,13 @@ git clone https://github.com/Abhishek21g/lattice-exercise-twin
 cd lattice-exercise-twin && pip install -e ".[dev]"
 
 lattice-exercise-twin plan examples/platoon-mesh-3node.yaml
-lattice-exercise-twin run --mock --plan platoon-mesh-3node
+lattice-exercise-twin run --plan platoon-mesh-3node   # mock by default
 lattice-exercise-twin doctor latest    # → BLOCK at T+14h
 lattice-exercise-twin report latest --html
+lattice-exercise-twin sync-site latest # refresh site/data from plan scenarios
 ```
+
+`run --live` only pings Lattice sandbox auth — full exercise fate is **mock** until sandbox entity/task playback is wired. See [docs/LATTICE_SANDBOX_SETUP.md](docs/LATTICE_SANDBOX_SETUP.md).
 
 ---
 
@@ -47,7 +50,8 @@ lattice-exercise-twin run --plan platoon-mesh-3node --live
 | `plan <yaml>` | Exercise mesh topology + duration → `out/plans/` |
 | `run [--plan NAME] [--scenario PATH]` | Mock mesh fate sim (default) or `--live` sandbox ping |
 | `doctor [run_id]` | Block/review/deploy from stream gap + task rules |
-| `report [--html]` | Mission receipt |
+| `report [--html]` | Mission receipt (self-contained HTML) |
+| `sync-site [run_id]` | Export plan scenarios → `site/data/` (relay-death + golden) |
 | `check-env` | Verify `LATTICE_*` env vars |
 
 ---

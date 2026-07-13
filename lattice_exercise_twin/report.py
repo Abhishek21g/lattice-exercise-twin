@@ -7,6 +7,60 @@ import json
 from pathlib import Path
 from typing import Any
 
+_INLINE_CSS = """
+:root {
+  --bg: #0f1419;
+  --fg: #e7ecf1;
+  --muted: #9aa8b5;
+  --accent: #5ec8a8;
+  --bad: #e07a7a;
+  --ok: #7ecf9a;
+  --card: #1a222b;
+}
+body.report-page {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+.shell { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+.eyebrow { color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75rem; }
+h1 { font-size: 1.75rem; margin: 0.35rem 0 0.5rem; }
+.lede { color: var(--muted); }
+.block-at { color: var(--bad); font-weight: 600; }
+.verdict-block { color: var(--bad); }
+.verdict-deploy { color: var(--ok); }
+.verdict-review { color: #e0b35c; }
+.mesh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+.node {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  border: 1px solid #2a3540;
+}
+.node.ok { border-color: #2f5a40; }
+.node.bad { border-color: #5a2f2f; }
+.node span { display: block; font-weight: 600; }
+.node small { color: var(--muted); }
+.findings { display: grid; gap: 0.75rem; }
+.finding {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid #4a5560;
+}
+.finding.critical { border-left-color: var(--bad); }
+.finding.warning { border-left-color: #e0b35c; }
+.finding h4 { margin: 0 0 0.35rem; font-size: 0.95rem; }
+.finding p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.pass { color: var(--ok); }
+"""
+
 
 def render_summary_md(manifest: dict[str, Any]) -> str:
     doc = manifest.get("doctor") or {}
@@ -41,12 +95,15 @@ def render_html(manifest: dict[str, Any]) -> str:
     mesh = plan.get("mesh") or {}
 
     nodes_html = ""
-    offline = set(probe.get("final_nodes_online") or [])
+    online_set = set(probe.get("final_nodes_online") or [])
     for n in mesh.get("nodes") or []:
         nid = n["id"]
-        online = nid in offline
+        online = nid in online_set
         cls = "ok" if online else "bad"
-        nodes_html += f'<div class="node {cls}"><span>{html.escape(nid)}</span><small>{html.escape(n.get("role",""))}</small></div>'
+        nodes_html += (
+            f'<div class="node {cls}"><span>{html.escape(nid)}</span>'
+            f'<small>{html.escape(n.get("role", ""))}</small></div>'
+        )
 
     finding_html = "\n".join(
         f"""<article class="finding {f['severity']}">
@@ -62,7 +119,7 @@ def render_html(manifest: dict[str, Any]) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Exercise receipt — {html.escape(verdict.upper())}</title>
-  <link rel="stylesheet" href="../styles.css">
+  <style>{_INLINE_CSS}</style>
 </head>
 <body class="report-page">
   <div class="shell">

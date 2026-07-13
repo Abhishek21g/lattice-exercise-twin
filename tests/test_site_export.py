@@ -31,3 +31,23 @@ def test_export_site_writes_scenario_json(workspace, tmp_path):
     assert golden["verdict"] == "deploy"
     assert golden["failure_hour"] is None
     assert sum(golden["hourly_investigate_tasks"]) >= 70
+
+
+def test_export_site_not_corrupted_by_golden_run(workspace, tmp_path):
+    """Regression: syncing after a golden scenario run must keep relay-death BLOCK."""
+    site = tmp_path / "site"
+    (site / "data").mkdir(parents=True)
+
+    _, golden_manifest = run_exercise(
+        plan_name="platoon-mesh-3node",
+        scenario=workspace / "examples" / "scenarios" / "ci-golden-mesh",
+        mock=True,
+    )
+    golden_manifest = doctor_run(golden_manifest["run_id"])
+    assert golden_manifest["probe"].get("first_block_hour") is None
+
+    export_site(golden_manifest, site_dir=site)
+    failure = json.loads((site / "data" / "relay-death-t14.json").read_text())
+    assert failure["failure_hour"] == 14
+    assert failure["verdict"] == "block"
+    assert failure["tasks_total"] == 14

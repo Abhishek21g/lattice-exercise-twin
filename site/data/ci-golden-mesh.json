@@ -1,7 +1,7 @@
 {
   "scenario_id": "ci-golden-mesh",
-  "run_id": null,
-  "generated_at": null,
+  "run_id": "run_20260713T230506Z",
+  "generated_at": "2026-07-13T23:05:06.240464+00:00",
   "mode": "mock",
   "plan_name": "platoon-mesh-3node",
   "duration_hours": 72,
@@ -85,7 +85,7 @@
   ],
   "verdict": "deploy",
   "findings": [],
-  "golden_tasks": null,
+  "golden_tasks": 73,
   "mesh": {
     "nodes": [
       {

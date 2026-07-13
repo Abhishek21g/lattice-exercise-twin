@@ -1,7 +1,7 @@
 {
   "scenario_id": "relay-death-t14",
-  "run_id": "run_20260710T013551Z",
-  "generated_at": "2026-07-10T01:35:51.929906+00:00",
+  "run_id": "run_20260713T230506Z",
+  "generated_at": "2026-07-13T23:05:06.240464+00:00",
   "mode": "mock",
   "plan_name": "platoon-mesh-3node",
   "duration_hours": 72,
